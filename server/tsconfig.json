@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "build",
+    "removeComments": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "pretty": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/services/synonyms copy._BAK"]
+}

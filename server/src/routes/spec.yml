@@ -1,0 +1,143 @@
+openapi: '3.0.0'
+info:
+  title: Synonyms API
+  description: API for managing synonyms
+  version: 1.0.0
+paths:
+  /synonyms:
+    post:
+      summary: Add a new word/synonym pair
+      description: Creates a bidirectional synonym relationship between a word and its synonyms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SynonymPair'
+      responses:
+        '201':
+          description: Word/Synonym pair added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  word:
+                    type: string
+                  synonyms:
+                    type: array
+                    items:
+                      type: string
+                example:
+                  message: 'Word/Synonym pair added successfully'
+                  word: 'happy'
+                  synonyms: ['joyful', 'content', 'pleased']
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: 'Invalid request. Required format: { "word": "string", "synonym": ["string"] }'
+  /synonyms/health:
+    get:
+      summary: Health check endpoint
+      description: Checks if the API service is available
+      responses:
+        '200':
+          description: Service is available
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'Synonyms API service is available'
+  /synonyms/search:
+    get:
+      summary: Find synonyms for a word
+      description: Returns all synonyms for the specified word
+      parameters:
+        - name: word
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The word to find synonyms for
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: The number of synonyms to skip
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: The number of synonyms to return
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        word:
+                          type: string
+                        synonyms:
+                          type: array
+                          items:
+                            type: string
+                  count:
+                    type: integer
+                example:
+                  results:
+                    - word: 'happy'
+                      synonyms: ['joyful', 'content', 'pleased']
+                  count: 1
+        '404':
+          description: No synonyms found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: 'No synonyms found for this word'
+components:
+  schemas:
+    SynonymPair:
+      type: object
+      required:
+        - word
+        - synonyms
+      properties:
+        word:
+          type: string
+          description: The first word in the synonym pair
+          minLength: 1
+          maxLength: 50
+        synonyms:
+          type: array
+          items:
+            type: string
+            description: The synonyms for the word
+            minLength: 1
+            maxLength: 50
+      example:
+        word: 'happy'
+        synonyms: ['joyful', 'content', 'pleased']
+      additionalProperties: false
