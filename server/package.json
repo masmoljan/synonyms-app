@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "API for managing synonyms",
   "main": "build/index.js",
+  "engines": {
+    "node": ">=22.9.0"
+  },
   "scripts": {
     "build": "tsc",
     "build:copy": "tsc && node -e \"require('fs').mkdirSync('build/routes', {recursive: true})\" && node -e \"require('fs').copyFileSync('src/routes/spec.yml', 'build/routes/spec.yml')\"",
     "start": "node build/index.js",
     "dev": "tsc && node -e \"require('fs').mkdirSync('build/routes', {recursive: true})\" && node -e \"require('fs').copyFileSync('src/routes/spec.yml', 'build/routes/spec.yml')\" && nodemon build/index.js",
-    "vercel-build": "npm run build:copy"
+    "vercel-build": "npm run build:copy",
+    "lint": "npx @biomejs/biome lint --write",
+    "lint:fix": ""
   },
   "dependencies": {
     "@koa/cors": "^5.0.0",
@@ -20,6 +25,7 @@
     "openapi-validator-middleware": "^3.2.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.1.1",
     "@types/dotenv": "^6.1.1",
     "@types/koa": "^2.15.0",
     "@types/koa__cors": "^5.0.0",
@@ -28,7 +34,6 @@
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "tslint": "^5.20.1",
-    "tslint-config-prettier": "^1.18.0",
     "typescript": "^5.8.3"
   }
 }
