@@ -1,8 +1,8 @@
-import { Middleware } from 'koa';
-import { ApiError, ApiErrorType } from '../../helpers';
+import type { Middleware } from "koa";
+import { ApiError, ApiErrorType } from "../../helpers";
 
 export enum ApplicationEvent {
-  KoaMiddlewareError = 'koaMiddlewareError',
+  KoaMiddlewareError = "koaMiddlewareError",
 }
 
 export const handleErrorMiddleware: Middleware = async (ctx, next) => {
@@ -10,10 +10,7 @@ export const handleErrorMiddleware: Middleware = async (ctx, next) => {
     await next();
   } catch (error) {
     if (error instanceof ApiError) {
-      const apiError = new ApiError(
-        error.type,
-        error.error
-      );
+      const apiError = new ApiError(error.type, error.error);
       ctx.status = apiError.httpStatusCode;
       ctx.body = { error: apiError.body };
       ctx.app.emit(ApplicationEvent.KoaMiddlewareError, apiError.error);
@@ -25,11 +22,7 @@ export const handleErrorMiddleware: Middleware = async (ctx, next) => {
 
       ctx.status = apiError.httpStatusCode;
       ctx.body = { error: apiError.body };
-      ctx.app.emit(
-        ApplicationEvent.KoaMiddlewareError,
-        apiError.error,
-        ctx
-      );
+      ctx.app.emit(ApplicationEvent.KoaMiddlewareError, apiError.error, ctx);
     }
   }
 };

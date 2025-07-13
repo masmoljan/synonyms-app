@@ -1,18 +1,33 @@
-import Koa from 'koa';
-import bodyParser from 'koa-bodyparser';
-import cors from '@koa/cors';
-import router from './routes';
-import { ApplicationEvent } from './routes/middlewares/handleError';
-import { errorLogger } from './helpers/';
+import cors from "@koa/cors";
+import Koa from "koa";
+import bodyParser from "koa-bodyparser";
+import router from "./routes";
+import { ApplicationEvent } from "./routes/middlewares/handleError";
+import { logKoaError, logRequest } from "./services/logger";
 
 export const koaMiddlewareErrorHandler = (
-  error: Error,
-  ctx: Koa.Context
+	error: Error,
+	ctx: Koa.Context,
 ): void => {
-  errorLogger('Koa Middleware Error', { error, ctx });
+	logKoaError(error, ctx);
 };
 
 const app = new Koa();
+
+app.use(async (ctx, next) => {
+	const start = Date.now();
+	await next();
+	const responseTime = Date.now() - start;
+	logRequest(
+		ctx.method,
+		ctx.url,
+		ctx.status,
+		responseTime,
+		ctx.headers["user-agent"],
+		ctx.request.body,
+		ctx.request.query,
+	);
+});
 
 app.use(cors());
 app.use(bodyParser());

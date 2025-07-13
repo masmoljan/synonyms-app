@@ -1,8 +1,10 @@
-openapi: '3.0.0'
+openapi: "3.0.0"
 info:
   title: Synonyms API
   description: API for managing synonyms
   version: 1.0.0
+servers:
+  - url: /api/v1
 paths:
   /synonyms:
     post:
@@ -13,9 +15,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SynonymPair'
+              $ref: "#/components/schemas/SynonymPair"
       responses:
-        '201':
+        "201":
           description: Word/Synonym pair added successfully
           content:
             application/json:
@@ -31,10 +33,10 @@ paths:
                     items:
                       type: string
                 example:
-                  message: 'Word/Synonym pair added successfully'
-                  word: 'happy'
-                  synonyms: ['joyful', 'content', 'pleased']
-        '400':
+                  message: "Word/Synonym pair added successfully"
+                  word: "happy"
+                  synonyms: ["joyful", "content", "pleased"]
+        "400":
           description: Invalid request
           content:
             application/json:
@@ -50,13 +52,13 @@ paths:
       summary: Health check endpoint
       description: Checks if the API service is available
       responses:
-        '200':
+        "200":
           description: Service is available
           content:
             text/plain:
               schema:
                 type: string
-                example: 'Synonyms API service is available'
+                example: "Synonyms API service is available"
   /synonyms/search:
     get:
       summary: Find synonyms for a word
@@ -81,7 +83,7 @@ paths:
             type: integer
           description: The number of synonyms to return
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -103,10 +105,10 @@ paths:
                     type: integer
                 example:
                   results:
-                    - word: 'happy'
-                      synonyms: ['joyful', 'content', 'pleased']
+                    - word: "happy"
+                      synonyms: ["joyful", "content", "pleased"]
                   count: 1
-        '404':
+        "404":
           description: No synonyms found
           content:
             application/json:
@@ -116,7 +118,7 @@ paths:
                   error:
                     type: string
                 example:
-                  error: 'No synonyms found for this word'
+                  error: "No synonyms found for this word"
 components:
   schemas:
     SynonymPair:
@@ -138,6 +140,6 @@ components:
             minLength: 1
             maxLength: 50
       example:
-        word: 'happy'
-        synonyms: ['joyful', 'content', 'pleased']
+        word: "happy"
+        synonyms: ["joyful", "content", "pleased"]
       additionalProperties: false

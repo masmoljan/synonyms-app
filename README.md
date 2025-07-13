@@ -17,13 +17,17 @@ A fast, in-memory synonyms search app with group merging and transitive relation
 - **Koa.js**
 
 ## Prerequisites
-**Important**: Set your environment variables before starting the server
+⚠️ **Important**: Set your environment variables before starting the server
 
 Example:
 ```bash
 NODE_ENV=development
 PORT=8082
 ```
+
+Package version requirements:
+- Node.js v. ```>=22.9.0```
+
 
 ## Installation
 
@@ -91,3 +95,18 @@ GET /synonyms/search?word=happy
 GET /synonyms/search?word=joyful
 // Returns: ["happy", "glad"]
 ```
+
+## Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+Current test coverage: Core business logic, group merging, transitive relationships

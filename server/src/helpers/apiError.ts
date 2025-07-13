@@ -1,4 +1,4 @@
-import { API_ERRORS, HTTP_STATUS_CODES } from './consts';
+import { API_ERRORS, HTTP_STATUS_CODES } from "../constants/consts";
 
 interface ApiErrorBody {
   code: string;
@@ -7,11 +7,18 @@ interface ApiErrorBody {
 }
 
 export enum ApiErrorType {
-  WordSynonymsPairEqual = 'WordSynonymsPairEqual',
-  InternalServerError = 'InternalServerError',
+  WordSynonymsPairEqual = "WordSynonymsPairEqual",
+  InternalServerError = "InternalServerError",
 }
 
-export class ApiError extends Error {
+interface IApiErrorInterface {
+  error: Error;
+  body: ApiErrorBody;
+  httpStatusCode: number;
+  type: ApiErrorType;
+}
+
+export class ApiError extends Error implements IApiErrorInterface {
   public error: Error;
   public body: ApiErrorBody;
   public httpStatusCode: number;
@@ -21,7 +28,7 @@ export class ApiError extends Error {
   constructor(
     type: ApiErrorType,
     error: Error,
-    codePrefix = '01',
+    codePrefix = "01",
     ...params: any[]
   ) {
     super(...params);

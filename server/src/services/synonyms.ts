@@ -1,8 +1,40 @@
-import { API_ERRORS } from '../helpers/consts';
-import { SynonymsStore } from '../models/synonymsStore';
-import { ApiError, ApiErrorType } from '../helpers/apiError';
+import { API_ERRORS } from "../constants/consts";
+import { SynonymsStore } from "../models/synonymsStore";
+import { ApiError, ApiErrorType } from "../helpers/apiError";
 
-export class SynonymsService {
+interface SynonymsServiceInterface {
+  addWordSynonyms(
+    word: string,
+    synonyms: string[]
+  ): {
+    word: string;
+    synonyms: string[];
+  };
+  getWordSynonyms(word: string): string[];
+  searchWords(
+    query: string,
+    skip: number,
+    limit: number
+  ): {
+    query: string;
+    results: { word: string; synonyms: string[] }[];
+    count: number;
+  };
+  getAffectedGroups(word: string, synonyms: string[]): Set<number>;
+  createNewGroup(word: string, synonyms: string[]): void;
+  addToExistingGroup(
+    groupIndex: number,
+    word: string,
+    synonyms: string[]
+  ): void;
+  mergeGroups(
+    affectedGroups: Set<number>,
+    newWord: string,
+    newSynonyms: string[]
+  ): void;
+}
+
+export class SynonymsService implements SynonymsServiceInterface {
   private static instance: SynonymsService;
   private synonymsStore: SynonymsStore;
 
@@ -10,22 +42,23 @@ export class SynonymsService {
     this.synonymsStore = new SynonymsStore();
   }
 
-  getAffectedGroups(word: string, synonyms: string[]) {
-    const affectedGroups = new Set<number>();
-    // if word exists in wordToGroup, add it to the affected groups
-    if (this.synonymsStore.hasWord(word)) {
-      affectedGroups.add(
-        this.synonymsStore.getWordToIndexGroup(word) as number
-      );
+  public static getInstance(): SynonymsService {
+    if (!SynonymsService.instance) {
+      SynonymsService.instance = new SynonymsService();
     }
-    // if synonyms exist in wordToGroup, add them to the affected groups
-    synonyms.forEach((synonym) => {
-      if (this.synonymsStore.hasWord(synonym)) {
-        affectedGroups.add(
-          this.synonymsStore.getWordToIndexGroup(synonym) as number
-        );
+    return SynonymsService.instance;
+  }
+
+  getAffectedGroups(word: string, synonyms: string[]): Set<number> {
+    const affectedGroups = new Set<number>();
+
+    [word, ...synonyms].forEach((w) => {
+      const groupIndex = this.synonymsStore.getWordToIndexGroup(w);
+      if (groupIndex !== undefined) {
+        affectedGroups.add(groupIndex);
       }
     });
+
     return affectedGroups;
   }
 
@@ -36,28 +69,17 @@ export class SynonymsService {
     // add word with synonyms to the synonyms group
     this.synonymsStore.setGroupToSynonyms(currentIndex, [word, ...synonyms]);
     // add synonyms to the word group
-    synonyms.forEach((synonym) => {
-      this.synonymsStore.setWordToIndexGroup(synonym, currentIndex);
-    });
+    this.synonymsStore.setWordsToIndexGroup(synonyms, currentIndex);
     this.synonymsStore.incrementNextIndex();
   }
 
   addToExistingGroup(groupIndex: number, word: string, synonyms: string[]) {
     const groupSet = this.synonymsStore.getSynonymsGroupSet(groupIndex)!;
-
-    // Add word if it doesn't exist
-    if (!this.synonymsStore.hasWord(word)) {
-      this.synonymsStore.setWordToIndexGroup(word, groupIndex);
-      groupSet.add(word);
-    }
-
-    // Add synonyms
-    synonyms.forEach((synonym) => {
-      if (!this.synonymsStore.hasWord(synonym)) {
-        this.synonymsStore.setWordToIndexGroup(synonym, groupIndex);
-        groupSet.add(synonym);
-      }
-    });
+    this.synonymsStore.setWordsToIndexGroupIfNotExists(
+      [word, ...synonyms],
+      groupIndex,
+      groupSet
+    );
   }
 
   mergeGroups(
@@ -65,28 +87,35 @@ export class SynonymsService {
     newWord: string,
     newSynonyms: string[]
   ) {
-    const targetGroupIndex = Math.min(...Array.from(affectedGroups));
+    const targetGroupIndex = Math.min(...affectedGroups);
     const allWords = new Set<string>();
 
-    affectedGroups.forEach((groupIndex) => {
-      const groupWords = this.synonymsStore.getSynonymsGroupSet(groupIndex)!;
-      groupWords.forEach((word) => allWords.add(word));
-    });
-
-    allWords.add(newWord);
-
-    newSynonyms.forEach((synonym) => allWords.add(synonym));
-    this.synonymsStore.setSynonymsGroupSet(targetGroupIndex, allWords);
-
-    allWords.forEach((word) => {
-      this.synonymsStore.setWordToIndexGroup(word, targetGroupIndex);
-    });
-
-    affectedGroups.forEach((groupIndex) => {
-      if (groupIndex !== targetGroupIndex) {
-        this.synonymsStore.deleteSynonymsGroup(groupIndex);
+    // Collect all words from affected groups
+    for (const groupIndex of affectedGroups) {
+      const groupWords = this.synonymsStore.getSynonymsGroupSet(groupIndex);
+      if (groupWords) {
+        for (const word of groupWords) {
+          allWords.add(word);
+        }
       }
-    });
+    }
+
+    // Add new word and synonyms
+    allWords.add(newWord);
+    newSynonyms.forEach((synonym) => allWords.add(synonym));
+
+    // Update group set and word-to-group mappings in batch
+    this.synonymsStore.setSynonymsGroupSet(targetGroupIndex, allWords);
+    this.synonymsStore.setWordsToIndexGroup(
+      Array.from(allWords),
+      targetGroupIndex
+    );
+
+    // Remove merged groups except the target
+    const groupsToDelete = Array.from(affectedGroups).filter(
+      (groupIndex) => groupIndex !== targetGroupIndex
+    );
+    this.synonymsStore.deleteSynonymsGroups(groupsToDelete);
   }
 
   addWordSynonyms(word: string, synonyms: string[]) {
@@ -129,37 +158,32 @@ export class SynonymsService {
     return index ? this.synonymsStore.getGroupToSynonyms(index) : [];
   }
 
-  searchWords(query: string, skip: number = 0, limit: number = 10) {
+  private mapWordWithSynonyms(word: string) {
+    const wordIndex = this.synonymsStore.getWordToIndexGroup(word);
+    const synonyms = wordIndex
+      ? this.synonymsStore
+          .getGroupToSynonyms(wordIndex)
+          .filter((s) => s !== word)
+      : [];
+    return {
+      word,
+      synonyms,
+    };
+  }
+
+  searchWords(query: string, skip: number, limit: number) {
     const normalizedQuery = this.synonymsStore.normalize(query);
     const allWords = this.synonymsStore.getAllWords();
 
     const matches = allWords
       .filter((word) => word.includes(normalizedQuery))
       .slice(skip, skip + limit)
-      .map((word) => {
-        const wordIndex = this.synonymsStore.getWordToIndexGroup(word);
-        const synonyms = wordIndex
-          ? this.synonymsStore
-              .getGroupToSynonyms(wordIndex)
-              .filter((s) => s !== word)
-          : [];
-        return {
-          word,
-          synonyms,
-        };
-      });
+      .map((word) => this.mapWordWithSynonyms(word));
 
     return {
       query: normalizedQuery,
       results: matches,
       count: matches.length,
     };
-  }
-
-  public static getInstance(): SynonymsService {
-    if (!SynonymsService.instance) {
-      SynonymsService.instance = new SynonymsService();
-    }
-    return SynonymsService.instance;
   }
 }
