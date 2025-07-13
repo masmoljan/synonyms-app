@@ -1,4 +1,28 @@
-export class SynonymsStore {
+interface ISynonymsStore {
+  normalize(word: string): string;
+  hasWord(word: string): boolean;
+  hasSynonym(synonym: string): boolean;
+  addWord(word: string, groupIndex: number): void;
+  getWordToIndexGroup(word: string): number | undefined;
+  setWordToIndexGroup(word: string, groupIndex: number): void;
+  setWordsToIndexGroup(words: string[], groupIndex: number): void;
+  setWordsToIndexGroupIfNotExists(
+    words: string[],
+    groupIndex: number,
+    groupSet: Set<string>
+  ): void;
+  getGroupToSynonyms(groupIndex: number): string[];
+  setGroupToSynonyms(groupIndex: number, synonyms: string[]): void;
+  getNextIndex(): number;
+  incrementNextIndex(): void;
+  getSynonymsGroupSet(groupIndex: number): Set<string> | undefined;
+  setSynonymsGroupSet(groupIndex: number, words: Set<string>): void;
+  deleteSynonymsGroup(groupIndex: number): void;
+  deleteSynonymsGroups(groupIndices: number[]): void;
+  getAllWords(): string[];
+}
+
+export class SynonymsStore implements ISynonymsStore {
   wordToGroup: Map<string, number>;
   groupToSynonyms: Map<number, Set<string>>;
   nextIndex: number;
@@ -33,6 +57,23 @@ export class SynonymsStore {
     this.wordToGroup.set(word, groupIndex);
   }
 
+  setWordsToIndexGroup(words: string[], groupIndex: number) {
+    words.forEach((word) => this.setWordToIndexGroup(word, groupIndex));
+  }
+
+  setWordsToIndexGroupIfNotExists(
+    words: string[],
+    groupIndex: number,
+    groupSet: Set<string>
+  ) {
+    words.forEach((word) => {
+      if (!this.hasWord(word)) {
+        this.setWordToIndexGroup(word, groupIndex);
+        groupSet.add(word);
+      }
+    });
+  }
+
   getGroupToSynonyms(groupIndex: number): string[] {
     return Array.from(this.groupToSynonyms.get(groupIndex) || []);
   }
@@ -59,6 +100,12 @@ export class SynonymsStore {
 
   deleteSynonymsGroup(groupIndex: number): void {
     this.groupToSynonyms.delete(groupIndex);
+  }
+
+  deleteSynonymsGroups(groupIndices: number[]): void {
+    groupIndices.forEach((groupIndex) => {
+      this.deleteSynonymsGroup(groupIndex);
+    });
   }
 
   getAllWords(): string[] {
