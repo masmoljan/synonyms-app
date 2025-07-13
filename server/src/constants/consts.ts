@@ -15,5 +15,5 @@ export const HTTP_STATUS_CODES = {
 
 export const DEFAULT_QUERY_OPTIONS = {
   SKIP: 0,
-  LIMIT: 5
+  LIMIT: 10
 }
