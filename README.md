@@ -95,3 +95,18 @@ GET /synonyms/search?word=happy
 GET /synonyms/search?word=joyful
 // Returns: ["happy", "glad"]
 ```
+
+## Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+Current test coverage: Core business logic, group merging, transitive relationships
