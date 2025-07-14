@@ -2,10 +2,12 @@
   "name": "synonyms-search-app",
   "version": "1.0.0",
   "description": "A full-stack synonyms search tool with Node.js backend and React frontend",
+  "engines": {
+    "node": "22.12.0"
+  },
   "scripts": {
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
     "install:server": "cd server && npm install",
-    "build:server": "cd server && npm run build",
     "install:client": "cd client && npm install",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "cd server && npm run dev",
@@ -13,7 +15,8 @@
     "test": "concurrently \"npm run test:server\" \"npm run test:client\"",
     "test:server": "cd server && npm test",
     "test:client": "cd client && npm test",
-    "build": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "build:client": "cd client && npm run build",
     "start": "cd server && npm start"
   },
   "devDependencies": {

@@ -62,7 +62,7 @@ export const logError = (err: Error, context?: LogContext): void => {
 	});
 };
 
-export const logKoaError = (err: Error, ctx: any): void => {
+export const logKoaError = (err: Error, ctx: Koa.Context): void => {
 	error("Koa Middleware Error", {
 		error: {
 			message: err.message,

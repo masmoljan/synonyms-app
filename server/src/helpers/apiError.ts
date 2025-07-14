@@ -65,10 +65,17 @@ export class ApiError extends Error implements IApiErrorInterface {
           httpStatusCode: HTTP_STATUS_CODES.BAD_REQUEST,
         };
       case ApiErrorType.InternalServerError:
-      default:
         return {
           body: {
             code: `${this.codePrefix}-500-01`,
+            message: API_ERRORS.INTERNAL_SERVER_ERROR,
+          },
+          httpStatusCode: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        };
+      default:
+        return {
+          body: {
+            code: `${this.codePrefix}-500-02`,
             message: API_ERRORS.INTERNAL_SERVER_ERROR,
           },
           httpStatusCode: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,

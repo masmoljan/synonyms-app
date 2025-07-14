@@ -142,7 +142,6 @@ export class SynonymsService implements SynonymsServiceInterface {
 			const groupIndex = Array.from(affectedGroups)[0];
 			this.addToExistingGroup(groupIndex, normalizedWord, normalizedSynonyms);
 		} else {
-			// if entered word is a synonym of another word in the group, add it to the group
 			this.mergeGroups(affectedGroups, normalizedWord, normalizedSynonyms);
 		}
 
