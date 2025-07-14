@@ -131,14 +131,16 @@ components:
           type: string
           description: The first word in the synonym pair
           minLength: 1
-          maxLength: 50
+          maxLength: 20
         synonyms:
           type: array
           items:
             type: string
             description: The synonyms for the word
             minLength: 1
-            maxLength: 50
+            maxLength: 20
+          minItems: 1
+          maxItems: 20
       example:
         word: "happy"
         synonyms: ["joyful", "content", "pleased"]

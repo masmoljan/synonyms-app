@@ -1,13 +1,13 @@
-import { Button } from '@mantine/core';
+import { Button } from "@mantine/core";
 
 interface AddSynonymButtonProps {
-  isLoading: boolean;
+	isLoading: boolean;
 }
 
 export default function AddSynonymButton({ isLoading }: AddSynonymButtonProps) {
-  return (
-    <Button type="submit" loading={isLoading} fullWidth>
-      Add Synonym
-    </Button>
-  );
+	return (
+		<Button type="submit" loading={isLoading} fullWidth>
+			Add Synonym
+		</Button>
+	);
 }

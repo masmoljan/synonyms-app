@@ -1,12 +1,12 @@
-import './styles/App.css';
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
+import "./styles/App.css";
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
 
-import { Routes } from './routes';
-import { RouterProvider } from 'react-router-dom';
+import { Routes } from "./routes";
+import { RouterProvider } from "react-router-dom";
 
 function App() {
-  return <RouterProvider router={Routes} />;
+	return <RouterProvider router={Routes} />;
 }
 
 export default App;

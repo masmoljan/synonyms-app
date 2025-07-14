@@ -1,1 +1,1 @@
-export * from './synonym';
+export * from "./synonym";
