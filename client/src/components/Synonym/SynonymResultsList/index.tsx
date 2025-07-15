@@ -1,8 +1,8 @@
-import type { Synonym } from "../../../types";
 import SynonymResult from "@components/Synonym/SynonymResult";
+import type { WordSynonym } from "../../../types";
 
 interface SynonymResultsListProps {
-	results: Synonym[];
+	results: WordSynonym[];
 }
 
 export default function SynonymResultsList({
