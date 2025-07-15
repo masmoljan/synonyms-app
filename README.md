@@ -10,6 +10,12 @@ A fast, in-memory synonyms search app with group merging and transitive relation
 - Case-insensitive search
 - OpenAPI validation
 
+## Production
+Project is deployed on Vercel
+
+- https://synonyms-app-sand.vercel.app/ (client)
+- https://synonyms-app-tau.vercel.app/api/v1 (server)
+
 ## Tech Stack
 
 - **Node.js**
