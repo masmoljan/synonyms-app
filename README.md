@@ -13,29 +13,51 @@ A fast, in-memory synonyms search app with group merging and transitive relation
 ## Tech Stack
 
 - **Node.js**
-- **TypeScript**
 - **Koa.js**
+- **TypeScript**
+- **React.js**
 
 ## Prerequisites
 ⚠️ **Important**: Set your environment variables before starting the server
 
+- in ```bash ./server/.env```
 Example:
 ```bash
 NODE_ENV=development
 PORT=8082
 ```
+- in ```bash ./client/.env```
+Example:
+```bash
+VITE_SERVER_API_URL=http://localhost:8082/api/v1
+```
 
 Package version requirements:
-- Node.js v. ```>=22.9.0```
+- Node.js v. ```>=22.12.0```
 
 
-## Installation
+## Installation and running
 
 ### Server
 ```bash
+cd server
 npm run install:server
 npm run build:server
 npm run dev:server
+```
+
+### Client
+```bash
+cd client
+npm run install:client
+npm run dev:client
+```
+
+## Install and run concurrently (Optional)
+```bash
+npm install
+npm run install:all
+npm run dev:all
 ```
 
 ## API Endpoints
@@ -110,3 +132,10 @@ npm run test:coverage
 ```
 
 Current test coverage: Core business logic, group merging, transitive relationships
+
+## Continued development
+Steps for continued development:
+
+- Add localization to backend
+- Add localization to frontend
+- Integrate Sentry for logging
