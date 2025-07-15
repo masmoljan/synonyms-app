@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
 import { debounce } from "lodash";
-import { useSearchSynonymsQuery } from "../api/synonymsSlice";
+import { useEffect, useRef, useState } from "react";
 import { DEFAULT_QUERY_OPTIONS } from "@/constants/constants";
+import { useSearchSynonymsQuery } from "../api/synonymsSlice";
 import useErrorNotification from "./useErrorNotification";
 
 export default function useSynonymSearch() {
@@ -18,7 +18,7 @@ export default function useSynonymSearch() {
 
 	const {
 		data: wordWithSynonyms,
-		error,
+		isError,
 		isLoading: isLoadingSynonyms,
 		isFetching,
 	} = useSearchSynonymsQuery(
@@ -32,7 +32,7 @@ export default function useSynonymSearch() {
 		},
 	);
 
-	useErrorNotification(error);
+	useErrorNotification(isError);
 
 	useEffect(() => {
 		setPage(1);

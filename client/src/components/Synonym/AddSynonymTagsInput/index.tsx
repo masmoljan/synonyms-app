@@ -1,11 +1,11 @@
-import { TagsInput, Text, Code } from "@mantine/core";
+import { Code, TagsInput, Text } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 
 interface SynonymTagsInputProps {
 	form: UseFormReturnType<{ word: string; synonyms: string[] }>;
 }
 
-export default function SynonymTagsInput({ form }: SynonymTagsInputProps) {
+export default function AddSynonymTagsInput({ form }: SynonymTagsInputProps) {
 	return (
 		<>
 			<TagsInput

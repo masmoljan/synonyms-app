@@ -1,6 +1,6 @@
+import { z } from "zod";
 import { ERROR_MESSAGES } from "@/constants/messages";
 import { VALIDATION_LIMITS, VALIDATION_PATTERNS } from "@/constants/validation";
-import { z } from "zod";
 
 export const addSynonymSchema = z
 	.object({
@@ -13,9 +13,14 @@ export const addSynonymSchema = z
 			.refine((s) => s.length > 0, ERROR_MESSAGES.WORD_EMPTY),
 
 		synonyms: z
-			.array(z.string().min(1).max(50))
-			.min(1, ERROR_MESSAGES.SYNONYMS_REQUIRED)
-			.max(20, ERROR_MESSAGES.SYNONYMS_TOO_MANY)
+			.array(
+				z
+					.string()
+					.min(VALIDATION_LIMITS.SYNONYM_MIN_LENGTH)
+					.max(VALIDATION_LIMITS.SYNONYM_MAX_LENGTH),
+			)
+			.min(VALIDATION_LIMITS.SYNONYMS_MIN_COUNT, ERROR_MESSAGES.SYNONYMS_REQUIRED)
+			.max(VALIDATION_LIMITS.SYNONYMS_MAX_COUNT, ERROR_MESSAGES.SYNONYMS_TOO_MANY)
 			.refine(
 				(synonyms) =>
 					new Set(synonyms.map((s) => s.toLowerCase())).size ===

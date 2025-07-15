@@ -5,7 +5,7 @@ interface SynonymResultsListSkeletonProps {
 }
 
 export default function SynonymResultsListSkeleton({
-	count = 3,
+	count = 5,
 }: SynonymResultsListSkeletonProps) {
 	return (
 		<>

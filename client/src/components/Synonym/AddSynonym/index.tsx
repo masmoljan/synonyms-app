@@ -5,14 +5,19 @@ import {
 import { Group, Modal, Stack, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDebouncedValue } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useEffect, useState } from "react";
 import AddSynonymButton from "@/components/Button/AddSynonym";
+import { UI_TEXT } from "@/constants/constants";
+import { ERROR_MESSAGES } from "@/constants/messages";
+import {
+	showErrorNotification,
+	showSuccessNotification,
+} from "@/utils/notifications";
 import { addSynonymSchema } from "@/validation/synonym";
-import AddSynonymInput from "../AddSynonymInput";
+import AddSynonymTagsInput from "../AddSynonymTagsInput";
+import AddSynonymWordInput from "../AddSynonymWordInput";
 import ExistingSynonymsAlert from "../ExistingSynonymsAlert";
-import SynonymTagsInput from "../SynonymTagsInput";
 
 function formatSuccessMessage(word: string, synonyms: string[]): string {
 	const synonymsText =
@@ -22,9 +27,11 @@ function formatSuccessMessage(word: string, synonyms: string[]): string {
 				}`
 			: synonyms[0];
 
-	return `Successfully added ${
-		synonyms.length > 1 ? "synonyms" : "synonym"
-	} "${synonymsText}" for "${word}"`;
+	return `${UI_TEXT.ADD_SUCCESS_PREFIX} ${
+		synonyms.length > 1
+			? UI_TEXT.SYNONYM_SUCCESS_PLURAL
+			: UI_TEXT.SYNONYM_SUCCESS_SINGLE
+	} "${synonymsText}" ${UI_TEXT.ADD_SUCCESS_FOR} "${word}"`;
 }
 
 interface AddSynonymProps {
@@ -55,7 +62,7 @@ export default function AddSynonym({ opened, onClose }: AddSynonymProps) {
 			const duplicatesValidation =
 				duplicates.length > 0
 					? {
-							synonyms: `These synonyms already exist: ${duplicates.join(
+							synonyms: `${ERROR_MESSAGES.SYNONYMS_ALREADY_EXIST} ${duplicates.join(
 								", ",
 							)}`,
 						}
@@ -84,21 +91,13 @@ export default function AddSynonym({ opened, onClose }: AddSynonymProps) {
 	const handleSubmit = form.onSubmit(async (values) => {
 		try {
 			const result = await addSynonym(values).unwrap();
-			notifications.show({
-				title: "Success",
-				message: formatSuccessMessage(result.word, result.synonyms),
-				color: "green",
-			});
+			const successMessage = formatSuccessMessage(result.word, result.synonyms);
+			showSuccessNotification(successMessage);
 			form.reset();
 			setCurrentWord("");
 			onClose();
-		} catch (error) {
-			console.log(error);
-			notifications.show({
-				title: "Error",
-				message: "An error occurred while adding the synonym",
-				color: "red",
-			});
+		} catch {
+			showErrorNotification(ERROR_MESSAGES.ADD_SYNONYM_ERROR);
 		}
 	});
 
@@ -113,7 +112,7 @@ export default function AddSynonym({ opened, onClose }: AddSynonymProps) {
 			title={
 				<Group gap="sm" align="center">
 					<Text fw={600} size="lg">
-						Add New Synonym
+						{UI_TEXT.ADD_SYNONYM_TITLE}
 					</Text>
 				</Group>
 			}
@@ -124,7 +123,7 @@ export default function AddSynonym({ opened, onClose }: AddSynonymProps) {
 		>
 			<form onSubmit={handleSubmit}>
 				<Stack gap="md" mb="md">
-					<AddSynonymInput
+					<AddSynonymWordInput
 						form={form}
 						isSearching={isSearching}
 						onWordChange={setCurrentWord}
@@ -132,7 +131,7 @@ export default function AddSynonym({ opened, onClose }: AddSynonymProps) {
 					{foundWordGroup && foundWordGroup.synonyms.length > 0 && (
 						<ExistingSynonymsAlert synonyms={foundWordGroup.synonyms} />
 					)}
-					<SynonymTagsInput form={form} />
+					<AddSynonymTagsInput form={form} />
 				</Stack>
 				<AddSynonymButton isLoading={isLoading} />
 			</form>

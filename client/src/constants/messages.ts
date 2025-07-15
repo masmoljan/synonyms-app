@@ -16,11 +16,3 @@ export const ERROR_MESSAGES = {
 export const SUCCESS_MESSAGES = {
 	NOTIFICATION_TITLE: "Success",
 };
-
-export const NOTIFICATION_CONFIG = {
-	ERROR_TITLE: "Error",
-	SUCCESS_TITLE: "Success",
-	ERROR_COLOR: "red",
-	SUCCESS_COLOR: "green",
-	AUTO_CLOSE_DURATION: 5000,
-};

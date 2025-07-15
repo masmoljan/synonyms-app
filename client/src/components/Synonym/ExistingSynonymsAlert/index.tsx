@@ -1,4 +1,5 @@
-import { Alert, Group, Badge, Text } from "@mantine/core";
+import { Alert, Badge, Group, Text } from "@mantine/core";
+import { UI_TEXT } from "@/constants/constants";
 
 interface ExistingSynonymsAlertProps {
 	synonyms: string[];
@@ -8,7 +9,7 @@ export default function ExistingSynonymsAlert({
 	synonyms,
 }: ExistingSynonymsAlertProps) {
 	return (
-		<Alert variant="light" color="blue" title="Existing synonyms found">
+		<Alert variant="light" color="blue" title={UI_TEXT.EXISTING_SYNONYMS_FOUND}>
 			<Group gap="xs">
 				{synonyms.map((synonym, index) => (
 					<Badge key={index} variant="light" color="blue">
@@ -17,7 +18,7 @@ export default function ExistingSynonymsAlert({
 				))}
 			</Group>
 			<Text size="sm" mt="xs">
-				These synonyms are already in your list.
+				{UI_TEXT.SYNONYMS_ALREADY_IN_LIST}
 			</Text>
 		</Alert>
 	);

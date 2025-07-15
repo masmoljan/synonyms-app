@@ -10,8 +10,12 @@ export const UI_TEXT = {
 	CLEAR_SEARCH_BUTTON: "Clear",
 	SYNONYM_SUCCESS_SINGLE: "synonym",
 	SYNONYM_SUCCESS_PLURAL: "synonyms",
+	EXISTING_SYNONYMS_FOUND: "Existing synonyms found",
+	SYNONYMS_ALREADY_IN_LIST: "These synonyms are already in your list",
+	NO_SYNONYMS_FOUND: "No synonyms found for word {searchTerm}",
 	ADD_SUCCESS_PREFIX: "Successfully added",
 	ADD_SUCCESS_FOR: "for",
+	ENTER_WORD: "Enter a word:"
 };
 
 export const DEFAULT_QUERY_OPTIONS = {
@@ -21,7 +25,3 @@ export const DEFAULT_QUERY_OPTIONS = {
 
 export const DEBOUNCE_DELAY = 500;
 
-export const NOTIFICATION_CONFIG = {
-	POSITION: "top-right",
-	LIMIT: 2,
-};

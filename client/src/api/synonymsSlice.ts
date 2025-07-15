@@ -1,9 +1,10 @@
+import type { SynonymsQueryParams, SynonymsResponse } from "@/types";
 import { apiSlice } from "./apiSlice";
 import { SYNONYMS_SEARCH_URL, SYNONYMS_URL } from "./routes";
 
 export const synonymsSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		searchSynonyms: builder.query({
+		searchSynonyms: builder.query<SynonymsResponse, SynonymsQueryParams>({
 			query: ({ word, skip, limit }) => ({
 				url: SYNONYMS_SEARCH_URL,
 				params: { word, skip, limit },

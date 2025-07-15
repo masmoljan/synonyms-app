@@ -1,17 +1,17 @@
 import { CloseButton, Loader, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 
-interface AddSynonymInputProps {
+interface AddSynonymWordInputProps {
 	form: UseFormReturnType<{ word: string; synonyms: string[] }>;
 	isSearching: boolean;
 	onWordChange: (word: string) => void;
 }
 
-export default function AddSynonymInput({
+export default function AddSynonymWordInput({
 	form,
 	isSearching,
 	onWordChange,
-}: AddSynonymInputProps) {
+}: AddSynonymWordInputProps) {
 	return (
 		<TextInput
 			label="Word"

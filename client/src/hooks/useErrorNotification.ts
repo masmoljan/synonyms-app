@@ -1,20 +1,12 @@
 import { useEffect } from "react";
-import { notifications } from "@mantine/notifications";
+import { ERROR_MESSAGES } from "@/constants/messages";
+import { showErrorNotification } from "@/utils/notifications";
 
-export default function useErrorNotification(error: any) {
+export default function useErrorNotification(isError: boolean) {
 	useEffect(() => {
-		if (error) {
-			const errorMessage =
-				error instanceof Error
-					? error.message
-					: "An error occurred while fetching data";
-
-			notifications.show({
-				title: "Error",
-				message: errorMessage,
-				color: "red",
-				autoClose: 5000,
-			});
+		if(isError) {
+			const errorMessage = ERROR_MESSAGES.GENERIC_ERROR;
+			showErrorNotification(errorMessage);
 		}
-	}, [error]);
+	}, [isError]);
 }
