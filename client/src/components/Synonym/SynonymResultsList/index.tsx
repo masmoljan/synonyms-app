@@ -10,7 +10,7 @@ export default function SynonymResultsList({
 }: SynonymResultsListProps) {
 	return (
 		<>
-			{results.map((wordSynonymPair: Synonym, index: number) => (
+			{results.map((wordSynonymPair: WordSynonym, index: number) => (
 				<SynonymResult key={index} result={wordSynonymPair} />
 			))}
 		</>
