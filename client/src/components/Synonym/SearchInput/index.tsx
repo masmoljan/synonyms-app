@@ -1,4 +1,5 @@
-import { TextInput, CloseButton, Group } from "@mantine/core";
+import { CloseButton, Group, TextInput } from "@mantine/core";
+import { UI_TEXT } from "@/constants/constants";
 
 interface SearchInputProps {
 	searchTerm: string;
@@ -14,7 +15,7 @@ export default function SearchInput({
 	return (
 		<Group mb="md">
 			<TextInput
-				placeholder="Enter a word..."
+				placeholder={UI_TEXT.ENTER_WORD}
 				value={searchTerm}
 				onChange={(e) => onInputChange(e.target.value)}
 				style={{ flexGrow: 1 }}

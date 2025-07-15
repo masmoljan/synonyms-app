@@ -1,5 +1,6 @@
 import { CloseButton, Loader, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import { UI_TEXT } from "@/constants/constants";
 
 interface AddSynonymWordInputProps {
 	form: UseFormReturnType<{ word: string; synonyms: string[] }>;
@@ -15,7 +16,7 @@ export default function AddSynonymWordInput({
 	return (
 		<TextInput
 			label="Word"
-			placeholder="Enter a word or phrase..."
+			placeholder={UI_TEXT.ADD_WORD_INPUT}
 			{...form.getInputProps("word")}
 			rightSection={
 				<div style={{ display: "flex", alignItems: "center", gap: "4px" }}>

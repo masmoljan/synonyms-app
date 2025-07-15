@@ -1,4 +1,4 @@
-import { Paper, Group, Skeleton, Stack } from "@mantine/core";
+import { Group, Paper, Skeleton, Stack } from "@mantine/core";
 
 export default function SynonymResultSkeleton() {
 	return (

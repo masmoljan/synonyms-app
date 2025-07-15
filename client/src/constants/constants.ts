@@ -15,7 +15,12 @@ export const UI_TEXT = {
 	NO_SYNONYMS_FOUND: "No synonyms found for word {searchTerm}",
 	ADD_SUCCESS_PREFIX: "Successfully added",
 	ADD_SUCCESS_FOR: "for",
-	ENTER_WORD: "Enter a word:"
+	ENTER_WORD: "Enter a word:",
+	ADD_MORE_SYNONYMS: "Add more...",
+	ADD_MORE_SYNONYMS_ALT: "Type and press comma...",
+	ADD_SYNONYMS_TIP: "Type synonyms and press comma to add them:",
+	ADD_SYNONYMS_TIP_EXAMPLE: "happy, joyful, cheerful",
+	ADD_WORD_INPUT: "Enter a word or phrase..."
 };
 
 export const DEFAULT_QUERY_OPTIONS = {

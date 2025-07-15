@@ -1,4 +1,4 @@
-import { Stack, Text, Title, Box, Group } from "@mantine/core";
+import { Box, Group, Stack, Text, Title } from "@mantine/core";
 import { UI_TEXT } from "@/constants/constants";
 
 export default function Header() {
