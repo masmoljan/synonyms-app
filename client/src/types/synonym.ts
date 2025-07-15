@@ -1,4 +1,4 @@
-export interface Synonym {
+export interface WordSynonym {
 	word: string;
 	synonyms: string[];
 }
@@ -10,6 +10,7 @@ export interface SynonymsQueryParams {
 }
 
 export interface SynonymsResponse {
-	results: Synonym[];
+	query: string;
+	results: WordSynonym[];
 	count: number;
 }
