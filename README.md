@@ -1,4 +1,4 @@
-# WordWave
+# <img src="./client/public/favicon-32x32.png"> WordWave
 
 A fast, in-memory synonyms search app with group merging and transitive relationships.
 
@@ -47,16 +47,16 @@ Package version requirements:
 ### Server
 ```bash
 cd server
-npm run install:server
-npm run build:server
-npm run dev:server
+npm run install
+npm run build
+npm run dev
 ```
 
 ### Client
 ```bash
 cd client
-npm run install:client
-npm run dev:client
+npm run install
+npm run dev
 ```
 
 ## Install and run concurrently (Optional)
@@ -137,11 +137,12 @@ npm run test:watch
 npm run test:coverage
 ```
 
-Current test coverage: Core business logic, group merging, transitive relationships
-
 ## Continued development
 Steps for continued development:
 
 - Add localization to backend
-- Add localization to frontend
+- Add localization to frontend (i18n)
 - Integrate Sentry for logging
+- Add more tests to frontend
+- Add docker images to both services
+- Add CI/CD piplines for deployment
