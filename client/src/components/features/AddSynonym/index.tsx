@@ -1,9 +1,9 @@
 import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { useEffect } from "react";
-import { UI_TEXT } from "@/constants/constants";
+import { ExistingSynonymsAlert } from "@/components/composite/ExistingSynonymsAlert";
 import { AddSynonymTagsInput } from "@/components/core/AddSynonymTagsInput";
 import { AddSynonymWordInput } from "@/components/core/AddSynonymWordInput";
-import { ExistingSynonymsAlert } from "@/components/composite/ExistingSynonymsAlert";
+import { UI_TEXT } from "@/constants/constants";
 import { useAddSynonym } from "@/hooks/useAddSynonym";
 
 interface AddSynonymProps {
