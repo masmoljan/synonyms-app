@@ -9,6 +9,7 @@ interface ApiErrorBody {
 export enum ApiErrorType {
   WordSynonymsPairEqual = "WordSynonymsPairEqual",
   InternalServerError = "InternalServerError",
+  DuplicateSynoynms = "DuplicateSynonyms"
 }
 
 interface IApiErrorInterface {
@@ -61,6 +62,14 @@ export class ApiError extends Error implements IApiErrorInterface {
           body: {
             code: `${this.codePrefix}-400-01`,
             message: API_ERRORS.WORD_SYNONYMS_PAIR_EQUAL,
+          },
+          httpStatusCode: HTTP_STATUS_CODES.BAD_REQUEST,
+        };
+      case ApiErrorType.DuplicateSynoynms:
+        return {
+          body: {
+            code: `${this.codePrefix}-400-02`,
+            message: API_ERRORS.DUPLICATE_SYNONYMS,
           },
           httpStatusCode: HTTP_STATUS_CODES.BAD_REQUEST,
         };

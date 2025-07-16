@@ -13,7 +13,7 @@ export const handleErrorMiddleware: Middleware = async (ctx, next) => {
       const apiError = new ApiError(error.type, error.error);
       ctx.status = apiError.httpStatusCode;
       ctx.body = { error: apiError.body };
-      ctx.app.emit(ApplicationEvent.KoaMiddlewareError, apiError.error);
+      ctx.app.emit(ApplicationEvent.KoaMiddlewareError, apiError.error, ctx);
     } else {
       const apiError = new ApiError(
         ApiErrorType.InternalServerError,

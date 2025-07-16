@@ -131,6 +131,14 @@ export class SynonymsService implements SynonymsServiceInterface {
 			);
 		}
 
+		const uniqueSynonyms = new Set(normalizedSynonyms)
+		if(uniqueSynonyms.size !== normalizedSynonyms.length) {
+			throw new ApiError(
+				ApiErrorType.DuplicateSynoynms,
+				new Error(API_ERRORS.DUPLICATE_SYNONYMS)
+			)
+		}
+
 		const affectedGroups = this.getAffectedGroups(
 			normalizedWord,
 			normalizedSynonyms,
