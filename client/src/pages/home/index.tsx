@@ -1,9 +1,9 @@
 import { Button, Group, Stack } from "@mantine/core";
-import { SynonymsSearch } from "@/components/features/SynonymsSearch";
-import { HomeLayout } from "@/layout/home";
 import { useDisclosure } from "@mantine/hooks";
 import { AddSynonym } from "@/components/features/AddSynonym";
-import { UI_TEXT } from "@/constants/constants";
+import { SynonymsSearch } from "@/components/features/SynonymsSearch";
+import { HomeLayout } from "@/layout/home";
+import i18n from "@/localization/i18n.json";
 
 export function HomePage() {
 	const [opened, { open, close }] = useDisclosure(false);
@@ -15,7 +15,7 @@ export function HomePage() {
 				<SynonymsSearch />
 				<Group justify="center">
 					<Button onClick={open} size="md">
-						{UI_TEXT.ADD_SYNONYM_TITLE}
+						{i18n.UI_TEXT.ADD_SYNONYM_TITLE}
 					</Button>
 				</Group>
 			</Stack>

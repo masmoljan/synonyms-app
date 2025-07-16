@@ -1,6 +1,6 @@
 import { Code, TagsInput, Text } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
-import { UI_TEXT } from "@/constants/constants";
+import i18n from "@/localization/i18n.json"
 
 interface SynonymTagsInputProps {
 	form: UseFormReturnType<{ word: string; synonyms: string[] }>;
@@ -13,8 +13,8 @@ export function AddSynonymTagsInput({ form }: SynonymTagsInputProps) {
 				label="Synonyms"
 				placeholder={
 					form.values.synonyms.length > 0
-						? UI_TEXT.ADD_MORE_SYNONYMS
-						: UI_TEXT.ADD_MORE_SYNONYMS_ALT
+						? i18n.UI_TEXT.ADD_MORE_SYNONYMS
+						: i18n.UI_TEXT.ADD_MORE_SYNONYMS_ALT
 				}
 				{...form.getInputProps("synonyms")}
 				splitChars={[","]}
@@ -28,8 +28,8 @@ export function AddSynonymTagsInput({ form }: SynonymTagsInputProps) {
 				}}
 			/>
 			<Text size="sm" c="dimmed">
-				{UI_TEXT.ADD_SYNONYMS_TIP}
-				<Code>{UI_TEXT.ADD_SYNONYMS_TIP_EXAMPLE}</Code>
+				{i18n.UI_TEXT.ADD_SYNONYMS_TIP}
+				<Code>{i18n.UI_TEXT.ADD_SYNONYMS_TIP_EXAMPLE}</Code>
 			</Text>
 		</>
 	);

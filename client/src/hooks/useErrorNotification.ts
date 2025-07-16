@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { ERROR_MESSAGES } from "@/constants/messages";
+import i18n from "@/localization/i18n.json";
 import { showErrorNotification } from "@/utils/notifications";
 
 export function useErrorNotification(isError: boolean) {
 	useEffect(() => {
 		if (isError) {
-			const errorMessage = ERROR_MESSAGES.GENERIC_ERROR;
+			const errorMessage = i18n.ERROR_MESSAGES.GENERIC_ERROR;
 			showErrorNotification(errorMessage);
 		}
 	}, [isError]);

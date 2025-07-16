@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import "@mantine/core/styles.css";
 import { createTheme, MantineProvider } from "@mantine/core";
-import App from "./App";
 import { Notifications } from "@mantine/notifications";
+import App from "./App";
 
 const theme = createTheme({
 	fontFamily: "Inter, sans-serif",

@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { ExistingSynonymsAlert } from "@/components/composite/ExistingSynonymsAlert";
 import { AddSynonymTagsInput } from "@/components/core/AddSynonymTagsInput";
 import { AddSynonymWordInput } from "@/components/core/AddSynonymWordInput";
-import { UI_TEXT } from "@/constants/constants";
 import { useAddSynonym } from "@/hooks/useAddSynonym";
+import i18n from "@/localization/i18n.json";
 
 interface AddSynonymProps {
 	opened: boolean;
@@ -32,7 +32,7 @@ export function AddSynonym({ opened, onClose }: AddSynonymProps) {
 			title={
 				<Group gap="sm" align="center">
 					<Text fw={600} size="lg">
-						{UI_TEXT.ADD_SYNONYM_TITLE}
+						{i18n.UI_TEXT.ADD_SYNONYM_TITLE}
 					</Text>
 				</Group>
 			}
@@ -54,7 +54,7 @@ export function AddSynonym({ opened, onClose }: AddSynonymProps) {
 					<AddSynonymTagsInput form={form} />
 				</Stack>
 				<Button type="submit" loading={isLoading} fullWidth>
-					{UI_TEXT.ADD_SYNONYM_BUTTON}
+					{i18n.UI_TEXT.ADD_SYNONYM_BUTTON}
 				</Button>
 			</form>
 		</Modal>

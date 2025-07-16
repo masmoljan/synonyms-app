@@ -1,12 +1,12 @@
+import { useSynonymSearch } from "@hooks/useSynonymSearch";
+import { Group, Paper, Text, Title } from "@mantine/core";
 import { NoResults } from "@/components/core/NoResults";
 import { SearchInput } from "@/components/core/SearchInput";
 import { SearchPagination } from "@/components/core/SearchPagination";
-import { SynonymResultsList } from "@/components/core/SynonymResultsList";
-import { useSynonymSearch } from "@hooks/useSynonymSearch";
-import { Group, Paper, Text, Title } from "@mantine/core";
 import { SynonymResultsListSkeleton } from "@/components/core/Skeleton/SynonymResultList";
-import { UI_TEXT } from "@/constants/constants";
+import { SynonymResultsList } from "@/components/core/SynonymResultsList";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
+import i18n from "@/localization/i18n.json";
 
 export function SynonymsSearch() {
 	const {
@@ -30,10 +30,10 @@ export function SynonymsSearch() {
 		<Paper p="xl" withBorder radius="lg" shadow="md">
 			<Group mb="lg" align="center" gap="sm">
 				<Title order={2} fw={600}>
-					{UI_TEXT.FIND_SYNONYMS_TITLE}
+					{i18n.UI_TEXT.FIND_SYNONYMS_TITLE}
 				</Title>
 				<Text c="dimmed" size="sm">
-					{UI_TEXT.FIND_SYNONYMS_SUBTITLE}
+					{i18n.UI_TEXT.FIND_SYNONYMS_SUBTITLE}
 				</Text>
 			</Group>
 

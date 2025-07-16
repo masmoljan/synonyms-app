@@ -23,6 +23,7 @@ export default defineConfig({
 			"@config": path.resolve(__dirname, "./src/config"),
 			"@layout": path.resolve(__dirname, "./src/layout"),
 			"@utils": path.resolve(__dirname, "./src/utils"),
+			"@localization": path.resolve(__dirname, "./src/localization")
 		},
 	},
 });

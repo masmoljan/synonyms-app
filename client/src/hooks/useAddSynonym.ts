@@ -6,8 +6,7 @@ import {
 	useAddSynonymMutation,
 	useSearchSynonymsQuery,
 } from "@/api/synonymsSlice";
-import { UI_TEXT } from "@/constants/constants";
-import { ERROR_MESSAGES } from "@/constants/messages";
+import i18n from "@/localization/i18n.json";
 import {
 	showErrorNotification,
 	showSuccessNotification,
@@ -22,11 +21,11 @@ function formatSuccessMessage(word: string, synonyms: string[]): string {
 				}`
 			: synonyms[0];
 
-	return `${UI_TEXT.ADD_SUCCESS_PREFIX} ${
+	return `${i18n.UI_TEXT.ADD_SUCCESS_PREFIX} ${
 		synonyms.length > 1
-			? UI_TEXT.SYNONYM_SUCCESS_PLURAL
-			: UI_TEXT.SYNONYM_SUCCESS_SINGLE
-	} "${synonymsText}" ${UI_TEXT.ADD_SUCCESS_FOR} "${word}"`;
+			? i18n.UI_TEXT.SYNONYM_SUCCESS_PLURAL
+			: i18n.UI_TEXT.SYNONYM_SUCCESS_SINGLE
+	} "${synonymsText}" ${i18n.UI_TEXT.ADD_SUCCESS_FOR} "${word}"`;
 }
 
 export function useAddSynonym(onClose: () => void) {
@@ -53,7 +52,7 @@ export function useAddSynonym(onClose: () => void) {
 				duplicates.length > 0
 					? {
 							synonyms: `${
-								ERROR_MESSAGES.SYNONYMS_ALREADY_EXIST
+								i18n.ERROR_MESSAGES.SYNONYMS_ALREADY_EXIST
 							} ${duplicates.join(", ")}`,
 						}
 					: {};
@@ -92,7 +91,7 @@ export function useAddSynonym(onClose: () => void) {
 			setCurrentWord("");
 			onClose();
 		} catch {
-			showErrorNotification(ERROR_MESSAGES.ADD_SYNONYM_ERROR);
+			showErrorNotification(i18n.ERROR_MESSAGES.ADD_SYNONYM_ERROR);
 		}
 	});
 

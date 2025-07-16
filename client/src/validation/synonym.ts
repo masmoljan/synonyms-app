@@ -1,19 +1,20 @@
 import { z } from "zod";
-import { ERROR_MESSAGES } from "@/constants/messages";
 import { VALIDATION_LIMITS, VALIDATION_PATTERNS } from "@/constants/validation";
+import i18n from "@/localization/i18n.json"
+
 
 export const addSynonymSchema = z
 	.object({
 		word: z
 			.string()
-			.min(VALIDATION_LIMITS.WORD_MIN_LENGTH, ERROR_MESSAGES.WORD_REQUIRED)
-			.max(VALIDATION_LIMITS.WORD_MAX_LENGTH, ERROR_MESSAGES.WORD_TOO_LONG)
-			.regex(VALIDATION_PATTERNS.WORD_CHARS, ERROR_MESSAGES.WORD_INVALID_CHARS)
+			.min(VALIDATION_LIMITS.WORD_MIN_LENGTH, i18n.ERROR_MESSAGES.WORD_REQUIRED)
+			.max(VALIDATION_LIMITS.WORD_MAX_LENGTH, i18n.ERROR_MESSAGES.WORD_TOO_LONG)
+			.regex(VALIDATION_PATTERNS.WORD_CHARS, i18n.ERROR_MESSAGES.WORD_INVALID_CHARS)
 			.refine((val) => /^[a-zA-Z]/.test(val), {
-				message: ERROR_MESSAGES.WORD_MUST_START_WITH_LETTER,
+				message: i18n.ERROR_MESSAGES.WORD_MUST_START_WITH_LETTER,
 			})
 			.transform((s) => s.trim())
-			.refine((s) => s.length > 0, ERROR_MESSAGES.WORD_EMPTY),
+			.refine((s) => s.length > 0, i18n.ERROR_MESSAGES.WORD_EMPTY),
 
 		synonyms: z
 			.array(
@@ -24,17 +25,17 @@ export const addSynonymSchema = z
 			)
 			.min(
 				VALIDATION_LIMITS.SYNONYMS_MIN_COUNT,
-				ERROR_MESSAGES.SYNONYMS_REQUIRED,
+				i18n.ERROR_MESSAGES.SYNONYMS_REQUIRED,
 			)
 			.max(
 				VALIDATION_LIMITS.SYNONYMS_MAX_COUNT,
-				ERROR_MESSAGES.SYNONYMS_TOO_MANY,
+				i18n.ERROR_MESSAGES.SYNONYMS_TOO_MANY,
 			)
 			.refine(
 				(synonyms) =>
 					new Set(synonyms.map((s) => s.toLowerCase())).size ===
 					synonyms.length,
-				ERROR_MESSAGES.SYNONYMS_MUST_BE_UNIQUE,
+				i18n.ERROR_MESSAGES.SYNONYMS_MUST_BE_UNIQUE,
 			),
 	})
 	.refine(
@@ -45,7 +46,7 @@ export const addSynonymSchema = z
 			);
 		},
 		{
-			message: ERROR_MESSAGES.SYNONYMS_CANNOT_INCLUDE_WORD,
+			message: i18n.ERROR_MESSAGES.SYNONYMS_CANNOT_INCLUDE_WORD,
 			path: ["synonyms"],
 		},
 	);

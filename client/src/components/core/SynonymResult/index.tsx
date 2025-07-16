@@ -1,6 +1,6 @@
 import { Badge, Group, List, Paper, Text } from "@mantine/core";
-import { UI_TEXT } from "@/constants/constants";
-import type { WordSynonym } from "../../../types/synonym";
+import i18n from "@/localization/i18n.json";
+import type { WordSynonym } from "@/types";
 
 interface SynonymResultProps {
 	result: WordSynonym;
@@ -10,11 +10,11 @@ export function SynonymResult({ result }: SynonymResultProps) {
 	return (
 		<Paper mb="md" p="xs" withBorder>
 			<Group mb="xs">
-				<Text fw={500}>{UI_TEXT.WORD_LABEL}</Text>
+				<Text fw={500}>{i18n.UI_TEXT.WORD_LABEL}</Text>
 				<Badge size="lg">{result.word}</Badge>
 			</Group>
 			<Text fw={500} mb="xs">
-				{UI_TEXT.SYNONYMS_LABEL}
+				{i18n.UI_TEXT.SYNONYMS_LABEL}
 			</Text>
 			<List listStyleType="none" spacing="md">
 				<List.Item>

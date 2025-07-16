@@ -1,12 +1,12 @@
 import { Text } from "@mantine/core";
-import { UI_TEXT } from "@/constants/constants";
+import i18n from "@/localization/i18n.json"
 
 interface NoResultsProps {
 	searchTerm: string;
 }
 
 export function NoResults({ searchTerm }: NoResultsProps) {
-	const noSynonymsFound = UI_TEXT.NO_SYNONYMS_FOUND.replace(
+	const noSynonymsFound = i18n.UI_TEXT.NO_SYNONYMS_FOUND.replace(
 		"{searchTerm}",
 		searchTerm,
 	);

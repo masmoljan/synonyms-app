@@ -1,5 +1,5 @@
 import { Box, Group, Stack, Text, Title } from "@mantine/core";
-import { UI_TEXT } from "@/constants/constants";
+import i18n from "@/localization/i18n.json"
 
 export function Header() {
 	return (
@@ -12,11 +12,11 @@ export function Header() {
 			<Stack h="100%" justify="center" align="center" gap="xs">
 				<Group gap="xs" align="center">
 					<Title order={2} c="white" fw={700}>
-						{UI_TEXT.APP_NAME}
+						{i18n.UI_TEXT.APP_NAME}
 					</Title>
 				</Group>
 				<Text c="rgba(255,255,255,0.9)" size="sm" fw={500}>
-					{UI_TEXT.APP_TAGLINE}
+					{i18n.UI_TEXT.APP_TAGLINE}
 				</Text>
 			</Stack>
 		</Box>

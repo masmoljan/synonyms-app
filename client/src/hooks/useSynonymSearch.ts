@@ -1,8 +1,8 @@
 import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { DEFAULT_QUERY_OPTIONS } from "@/constants/constants";
-import { useSearchSynonymsQuery } from "../api/synonymsSlice";
 import { useErrorNotification } from "@/hooks/useErrorNotification";
+import { useSearchSynonymsQuery } from "../api/synonymsSlice";
 
 export function useSynonymSearch() {
 	const [searchTerm, setSearchTerm] = useState("");
