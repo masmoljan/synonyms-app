@@ -1,6 +1,7 @@
 import cors from "@koa/cors";
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
+import ratelimit from "koa-ratelimit";
 import router from "./routes";
 import { ApplicationEvent } from "./routes/middlewares/handleError";
 import { logKoaError, logRequest } from "./services/logger";
@@ -13,6 +14,16 @@ export const koaMiddlewareErrorHandler = (
 };
 
 const app = new Koa();
+
+const db = new Map();
+
+app.use(ratelimit({
+	driver: 'memory',
+	db,
+	duration: 10 * 60 * 1000,
+	id: (ctx) => ctx.ip,
+	max: 100
+}))
 
 app.use(async (ctx, next) => {
 	const start = Date.now();
