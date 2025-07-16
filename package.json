@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A full-stack synonyms search tool with Node.js backend and React frontend",
   "engines": {
-    "node": "22.12.0"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
