@@ -9,7 +9,7 @@
     "WORD_MUST_START_WITH_LETTER": "Word must start with a letter",
     "WORD_EMPTY": "Word cannot be empty",
     "SYNONYMS_REQUIRED": "At least one synonym is required",
-    "SYNONYMS_TOO_MANY": "Maximum 20 synonyms allowed",
+    "SYNONYMS_TOO_MANY": "Maximum 10 synonyms allowed",
     "SYNONYMS_MUST_BE_UNIQUE": "Synonyms must be unique",
     "SYNONYMS_CANNOT_INCLUDE_WORD": "Synonyms cannot include the original word",
     "SYNONYMS_ALREADY_EXIST": "These synonyms already exist:"

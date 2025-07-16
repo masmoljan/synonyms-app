@@ -1,6 +1,7 @@
 import { Code, TagsInput, Text } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
-import i18n from "@/localization/i18n.json"
+import { VALIDATION_LIMITS } from "@/constants/validation";
+import i18n from "@/localization/i18n.json";
 
 interface SynonymTagsInputProps {
 	form: UseFormReturnType<{ word: string; synonyms: string[] }>;
@@ -18,7 +19,8 @@ export function AddSynonymTagsInput({ form }: SynonymTagsInputProps) {
 				}
 				{...form.getInputProps("synonyms")}
 				splitChars={[","]}
-				maxTags={20}
+				maxTags={VALIDATION_LIMITS.SYNONYMS_MAX_COUNT}
+				maxLength={VALIDATION_LIMITS.SYNONYM_MAX_LENGTH}
 				styles={{
 					inputField: {
 						caretColor: "var(--mantine-color-text)",
