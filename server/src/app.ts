@@ -22,7 +22,7 @@ app.use(ratelimit({
 	db,
 	duration: 10 * 60 * 1000,
 	id: (ctx) => ctx.ip,
-	max: 100
+	max: 1000
 }))
 
 app.use(async (ctx, next) => {
